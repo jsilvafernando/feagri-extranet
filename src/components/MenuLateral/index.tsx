@@ -1,46 +1,58 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
-interface MenuLateral{
-    titleMenu: string;
+// interface MenuLateral{
+//     titleMenu: string;
+// }
+
+
+
+
+
+export function MenuLateral(){
+//     var toggler = document.getElementsByClassName("fa-plus-square");
+
+//     function toggleClick(){
+//         for (var i = 0; i < toggler.length; i++) {
+//             toggler[i].addEventListener("click", function () {
+//                 this.parentElement.querySelector(".nested").classList.toggle("active");
+//                 if (toggler.classList.contains("far fa-plus-square")) {
+//                     toggler.classList.remove("far fa-plus-square");
+//                     toggler.classList.add("fa-minus-square");
+//                 } else if (toggler.classList.contains("fa-minus-square")) {
+//                     toggler.classList.remove("fa-minus-square");
+//                     toggler.classList.add("far fa-plus-square");
+//                 }
+//             });
+//         }
+//     }
+const[graduation, setGraduation] = useState<Boolean>(false)
+const[commission, setCommission] = useState<Boolean>(false)
+
+function clickOnGraduation(){ //função define se o hook graduation
+    graduation ? setGraduation(false) : setGraduation(true)
 }
 
-
-
-export function MenuLateral(props: MenuLateral){
-    var toggler = document.getElementsByClassName("fa-plus-square");
-
-    function toggleClick(){
-        for (var i = 0; i < toggler.length; i++) {
-            toggler[i].addEventListener("click", function () {
-                this.parentElement.querySelector(".nested").classList.toggle("active");
-                if (toggler.classList.contains("fa-plus-square")) {
-                    toggler.classList.remove("fa-plus-square");
-                    toggler.classList.add("fa-minus-square");
-                } else if (toggler.classList.contains("fa-minus-square")) {
-                    toggler.classList.remove("fa-minus-square");
-                    toggler.classList.add("fa-plus-square");
-                }
-            });
-        }
-    }
+function clickOnCommission(){ //função define se o hook graduation
+    commission ? setCommission(false) : setCommission(true)
+}
     
     return (
         <aside id="lateral" className="lateral d-none d-sm-block col-lg-3 col-md-4">
-        <h3>{props.titleMenu}</h3>
+        <h3>GRADUAÇÃO</h3>
         <nav className="menu-lateral">
             <ul>
                 <li className="item-parent has-child">
-                    <span className="far fa-plus-square" onClick={toggleClick}></span>
+                    <span className="far fa-plus-square" onClick={clickOnGraduation}></span>
                     <a href="#">Graduação</a>
-                    <ul className="nested">
+                    <ul className={graduation ? "nested.active" : "nested"}> {/*aqui define as classes*/}
                         <li><a href="#">Objetivo</a></li>
                         <li><a href="#">Histórico</a></li>
                     </ul>
                 </li>
                 <li className="item-parent has-child">
-                    <span className="far fa-plus-square" onClick={toggleClick}></span>
+                    <span className="far fa-plus-square" onClick={clickOnCommission}></span>
                     <a href="#">Comissão</a>
-                    <ul className="nested">
+                    <ul className={commission ? "nested.active" : "nested"}>
                         <li><a href="#">Comissão</a></li>
                         <li><a href="#">Composição</a></li>
                     </ul>
