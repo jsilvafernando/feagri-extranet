@@ -1,32 +1,27 @@
-import React from "react";
-
+import React, {useState} from "react";
+import {
+    BrowserRouter,
+    Link,
+  } from "react-router-dom";
 interface MenuLateral{
     titleMenu: string;
 }
 
 
 
-export function MenuLateral(props: MenuLateral){
-    var toggler = document.getElementsByClassName("fa-plus-square");
 
-    function toggleClick(){
-        for (var i = 0; i < toggler.length; i++) {
-            toggler[i].addEventListener("click", function () {
-                this.parentElement.querySelector(".nested").classList.toggle("active");
-                if (toggler.classList.contains("fa-plus-square")) {
-                    toggler.classList.remove("fa-plus-square");
-                    toggler.classList.add("fa-minus-square");
-                } else if (toggler.classList.contains("fa-minus-square")) {
-                    toggler.classList.remove("fa-minus-square");
-                    toggler.classList.add("fa-plus-square");
-                }
-            });
-        }
+
+
+export function MenuLateral({ titleMenu }: MenuLateral) {
+    const[clickMenu, setClickMenu] = useState<Boolean>(false);
+
+    function toggleClick(): void {
+        clickMenu ? setClickMenu(false) : setClickMenu(true)
     }
-    
+
     return (
         <aside id="lateral" className="lateral d-none d-sm-block col-lg-3 col-md-4">
-        <h3>{props.titleMenu}</h3>
+        <h3>{titleMenu}</h3>
         <nav className="menu-lateral">
             <ul>
                 <li className="item-parent has-child">
@@ -87,10 +82,13 @@ export function MenuLateral(props: MenuLateral){
                     </ul>
                 </li>
                 <li className="item-parent has-child">
-                    <span className="far fa-plus-square"></span>
+                    <span className="far fa-plus-square" onClick={toggleClick}></span>
                     <a href="#">Protocolo</a>
-                    <ul className="nested">
+                    <ul className={clickMenu ? "nested.active" : "nested"}>
                         <li><a href="#">Solicitações</a></li>
+                        <li>
+                            {/* <Link to ="/graduacao/protocolo/solicitacao">Solicitações</Link> */}
+                        </li>
                         <li><a href="#">Consulta solicitações</a></li>
                     </ul>
                 </li>

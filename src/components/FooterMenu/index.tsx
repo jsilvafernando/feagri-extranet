@@ -1,31 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 
 export function FooterMenu(){
-    // var bottomMenu = document.getElementById("bottom");
-    let bottomMenu = document.querySelector(".bottom");
-    // var bottomMenuDetail = document.getElementById("bottom-detail");
-    let bottomMenuDetail = document.querySelector(".bottom-detail");
+    const[clickBottomMenu, setClickBottomMenu] = useState<Boolean>(false);
 
-
-    function toggleClick(){
-        // bottomMenu.addEventListener("click", function () {
-            if (bottomMenu.classList.contains("closed")) {
-                bottomMenu.classList.remove("closed");
-                bottomMenu.classList.add("open");
-                bottomMenuDetail.classList.remove("closed");
-                bottomMenuDetail.classList.add("open");
-            } else if (bottomMenu.classList.contains("open")) {
-                bottomMenu.classList.remove("open");
-                bottomMenu.classList.add("closed");
-                bottomMenuDetail.classList.remove("open");
-                bottomMenuDetail.classList.add("closed");
-            }
-        // });        
+    function toggleClick(): void {
+        clickBottomMenu ? setClickBottomMenu(false) : setClickBottomMenu(true)
     }
+
+
 
     return (
         <>
-        <section className="bottom d-none d-sm-block closed" onClick={toggleClick}>
+        <section className={clickBottomMenu ? "bottom d-none d-sm-block open" : "bottom d-none d-sm-block closed"} onClick={toggleClick}>
             <div className="container">
                 <div className="row">
                     <div className="col-md-3">
@@ -47,7 +33,7 @@ export function FooterMenu(){
                 </div>
             </div>
         </section>  
-        <section className="bottom-detail d-none d-sm-block closed" >
+        <section className={clickBottomMenu ? "bottom-detail d-none d-sm-block open" : "bottom-detail d-none d-sm-block closed"}>
             <div className="container">
                 <div className="row">
                     <div className="col-md-3">

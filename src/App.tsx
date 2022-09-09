@@ -5,6 +5,9 @@ import { MenuLateral } from '../src/components/MenuLateral'
 import { IntranetContent } from '../src/components/IntranetContent'
 import { Footer } from '../src/components/Footer'
 import { FooterMenu } from '../src/components/FooterMenu'
+import { Root } from './routes/Root'
+// import { Protocolo } from './components/Protocolo/Protocolo'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 
@@ -18,7 +21,9 @@ function App() {
               <Breadcrumbs title="Extranet" icon="fa fa-home"/>
               <div className="row">
                 <MenuLateral titleMenu="Graduação"/>
-                <IntranetContent titleContent="Extranet"/>
+                <IntranetContent>
+                  <Root />
+                </IntranetContent>
               </div>
             </main>
       </div>      
