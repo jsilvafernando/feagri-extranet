@@ -4,38 +4,19 @@ interface MenuLateral {
     titleMenu: string;
 }
 
-interface ItemMenu {
-    name: string,
-    uri: string,
-    selected: boolean,
-    childs: []
-}
-
-
 export function MenuLateral(props: MenuLateral) {
 
-    const [items, setItems] = useState([]);
-
-    function toggleHide(item): void {
-
-        items.forEach((i) => {
-            if (i.name !== item.name) {
-                i.selected = "false"
-            } else {
-                i.selected = "true"
-            }
-        });
-
-        setItems(items);
-    }
-
+    let [menu, setMenu]: any = useState([]);
 
     useEffect(() => {
-        let items = [
+
+        // integracao com API (json axios)
+
+        let api = [
             {
                 name: "Graduação",
                 uri: "#",
-                selected: 'false',
+                selected: false,
                 childs: [
                     {
                         name: "Objetivo",
@@ -50,7 +31,7 @@ export function MenuLateral(props: MenuLateral) {
             {
                 name: "Comissão",
                 uri: "#",
-                selected: 'false',
+                selected: false,
                 childs: [
                     {
                         name: "Comissão",
@@ -61,13 +42,70 @@ export function MenuLateral(props: MenuLateral) {
                         uri: "#"
                     }
                 ]
+            },
+            {
+                name: "Teste 3",
+                uri: "#",
+                selected: false,
+                childs: [
+                    {
+                        name: "Filho 01",
+                        uri: "#"
+                    },
+                    {
+                        name: "Filho 02",
+                        uri: "#"
+                    }
+                ]
+            },
+            {
+                name: "Teste 4",
+                uri: "#",
+                selected: false,
+                childs: [
+                    {
+                        name: "Filho 01",
+                        uri: "#"
+                    },
+                    {
+                        name: "Filho 02",
+                        uri: "#"
+                    }
+                ]
             }
         ];
 
-        setItems(items);
+        setMenu(api);
 
-    }, [])
+    }, []);
 
+    function toggle(item: any): void {
+
+        let accordion: any = [];
+
+        menu.forEach((i: any) => {
+            let m : any;
+            if (i.name !== item.name) {
+                m = {
+                    name: i.name,
+                    uri: i.uri,
+                    selected: false,
+                    childs: i.childs
+                }
+                accordion.push();
+            } else {
+                m = {
+                    name: i.name,
+                    uri: i.uri,
+                    selected: !i.selected,
+                    childs: i.childs
+                };
+            }
+            accordion.push(m);
+        });
+
+        setMenu(accordion);
+    }
 
     return (
         <aside id="lateral" className="lateral d-none d-sm-block col-lg-3 col-md-4">
@@ -75,19 +113,19 @@ export function MenuLateral(props: MenuLateral) {
             <nav className="menu-lateral">
                 <ul>
                     {
-                        items.map((item, index) => {
+                        menu.map((item: any, index: any) => {
                             return (
                                 <li className="item-parent has-child" key={index}>
 
                                     <span
-                                        className={"far " + (item.selected === "false" ? 'fa-plus-square' : 'fa-minus-square')}
-                                        onClick={() => toggleHide(item)}></span>
+                                        className={"far " + (!item.selected ? 'fa-plus-square' : 'fa-minus-square')}
+                                        onClick={() => toggle(item)}></span>
 
-                                    <a href={item.uri}>{item.name}</a>
+                                    <a href={item.uri} onClick={() => toggle(item)}>{item.name}</a>
 
-                                    <ul className={"nested " + (item.selected === "true" ? 'active' : '')}>
+                                    <ul className={"nested " + (item.selected ? 'active' : '')}>
                                         {
-                                            item.childs.map((c, key) => {
+                                            item.childs.map((c: any, key: any) => {
                                                 return (
                                                     <li key={key}>
                                                         <a href="#">{c.name}</a>
