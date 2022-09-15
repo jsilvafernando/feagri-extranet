@@ -18,7 +18,7 @@ function App() {
       <Header />
       <div className="container">
             <main className="main-wrapper">
-              <Breadcrumbs title="Extranet" icon="fa fa-home"/>
+              <Breadcrumbs title="Extranet" icon="fa fa-home" subTitle=""/>
               <div className="row">
                 <MenuLateral titleMenu="Graduação"/>
                 <IntranetContent>
