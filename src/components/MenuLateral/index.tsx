@@ -1,99 +1,199 @@
-import React, {useState} from "react";
+import { useState, useEffect } from "react";
 import {
     BrowserRouter,
     Link,
   } from "react-router-dom";
-interface MenuLateral{
+
+interface MenuLateral {
     titleMenu: string;
+}  
+interface ItemMenu {
+    name: string,
+    uri: string,
+    selected: boolean,
+    childs: IChild[]
 }
 
+interface IChild {
+    name: string,
+    uri: string,
+    note: string,
+    path: string,
+    type: string,
+    link: string,
+}
 
+export function MenuLateral(props: MenuLateral) {
 
+    let [menu, setMenu] = useState<ItemMenu[]>([]);
 
+    useEffect(() => {
 
+        // integracao com API (json axios)
 
-export function MenuLateral({ titleMenu }: MenuLateral) {
-    const[clickMenu, setClickMenu] = useState<Boolean>(false);
+        let api = [
+            {
+                name: "Graduação",
+                uri: "#",
+                selected: false,
+                childs: [
+                    {
+                        name: "Objetivo",
+                        uri: "https://www.feagri.unicamp.br/portal/",
+                        note: "",
+                        path: "a-graduacao/objetivo",
+                        link: "",
+                        type: "component"
+                    },
+                    {
+                        name: "Histórico",
+                        uri: "https://www.feagri.unicamp.br/portal/",
+                        note: "",
+                        path: "a-graduacao/historico",
+                        link: "",
+                        type: "component"
+                    },
+                    {
+                        name: "Formas de Ingresso(DAC)",
+                        uri: "",
+                        note: "",
+                        path: "",
+                        link: "https://www.dac.unicamp.br/portal/graduacao/regimento-geral",
+                        type: "url"
 
-    function toggleClick(): void {
-        clickMenu ? setClickMenu(false) : setClickMenu(true)
+                    },
+                    {
+                        name: "Catálogos do curso (DAC)",
+                        uri: "",
+                        note: "",
+                        path: "",
+                        link: "https://www.dac.unicamp.br/portal/graduacao/catalogos-de-cursos",
+                        type: "url"
+
+                    }
+
+                ]
+            },
+            {
+                name: "Comissão",
+                uri: "#",
+                selected: false,
+                childs: [
+                    {
+                        name: "Comissão",
+                        uri: "#",
+                        note: "",
+                        path: "",
+                        link: "",
+                        type: "component"
+                    },
+                    {
+                        name: "Composição",
+                        uri: "#",
+                        note: "",
+                        path: "",
+                        link: "",
+                        type: "component"
+                    }
+                ]
+            },
+            {
+                name: "Protocolo",
+                uri: "#",
+                selected: false,
+                childs: [
+                    {
+                        name: "Solicitações",
+                        uri: "",
+                        note: "/extranet/",
+                        path: "",
+                        link: "graduacao/protocolo/solicitacao",
+                        type: "url"
+                    },
+                    {
+                        name: "Consulta solicitações",
+                        uri: "",
+                        note: "/extranet/",
+                        path: "",
+                        link: "graduacao/protocolo/solicitacao/consulta",
+                        type: "url"
+                    }
+                ]
+            }
+
+        ];
+
+        setMenu(api);
+
+    }, []);
+
+    function toggle(item: ItemMenu): void {
+
+        let accordion: any = [];
+
+        menu.forEach((i) => {
+            let m : any;
+            // console.log(i.name);
+            if (i.name !== item.name) {
+                m = {
+                    name: i.name,
+                    uri: i.uri,
+                    selected: false,
+                    childs: i.childs
+                }
+                accordion.push();
+            } else {
+                m = {
+                    name: i.name,
+                    uri: i.uri,
+                    selected: !i.selected,
+                    childs: i.childs
+                };
+            }
+            accordion.push(m);
+        });
+        // console.log(accordion)
+        setMenu(accordion);
     }
 
     return (
         <aside id="lateral" className="lateral d-none d-sm-block col-lg-3 col-md-4">
-        <h3>{titleMenu}</h3>
-        <nav className="menu-lateral">
-            <ul>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square" onClick={toggleClick}></span>
-                    <a href="#">Graduação</a>
-                    <ul className="nested">
-                        <li><a href="#">Objetivo</a></li>
-                        <li><a href="#">Histórico</a></li>
-                    </ul>
-                </li>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square" onClick={toggleClick}></span>
-                    <a href="#">Comissão</a>
-                    <ul className="nested">
-                        <li><a href="#">Comissão</a></li>
-                        <li><a href="#">Composição</a></li>
-                    </ul>
-                </li>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square"></span>
-                    <a href="#">Normas</a>
-                    <ul className="nested">
-                        <li><a href="#">Regimento geral (DAC)</a></li>
-                        <li><a href="#">Regimento interno</a></li>
-                    </ul>
-                </li>
+            <h3>{props.titleMenu}</h3>
+            <nav className="menu-lateral">
+                <ul>
+                    {
+                        menu.map((item: ItemMenu, index: number) => {
+                            return (
+                                <li className="item-parent has-child" key={index}>
 
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square"></span>
-                    <a href="#">Disciplinas</a>
-                    <ul className="nested">
-                        <li><a href="#">Obrigatórias</a></li>
-                        <li><a href="#">Eletivas</a></li>
-                        <li>
-                            <span className="far fa-plus-square"></span>
-                            <a href="#">Certificados de Estudos</a>
-                            <ul className="nested">
-                                <li><a href="#">Comissão</a></li>
-                                <li><a href="#">Composição</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square"></span>
-                    <a href="#">Professores</a>
-                    <ul className="nested">
-                        <li><a href="#">Calendário Feagri</a></li>
-                        <li><a href="#">Avaliação do curso</a></li>
-                    </ul>
-                </li>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square"></span>
-                    <a href="#">Alunos</a>
-                    <ul className="nested">
-                        <li><a href="#">Avaliação disciplinas</a></li>
-                        <li><a href="#">Avaliação curso</a></li>
-                    </ul>
-                </li>
-                <li className="item-parent has-child">
-                    <span className="far fa-plus-square" onClick={toggleClick}></span>
-                    <a href="#">Protocolo</a>
-                    <ul className={clickMenu ? "nested.active" : "nested"}>
-                        <li><a href="#">Solicitações</a></li>
-                        <li>
-                            {/* <Link to ="/graduacao/protocolo/solicitacao">Solicitações</Link> */}
-                        </li>
-                        <li><a href="#">Consulta solicitações</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-    )    
-}
+                                    <span
+                                        className={"far " + (!item.selected ? 'fa-plus-square' : 'fa-minus-square')}
+                                        onClick={() => toggle(item)}></span>
+
+                                    <a href={item.uri} onClick={() => toggle(item)}>{item.name}</a>
+
+                                    <ul className={"nested " + (item.selected ? 'active' : '')}>
+                                        {
+                                            item.childs.map((c: IChild, key: number) => {
+                                                return (
+                                                    <li key={key}>
+                                                        { c.type === 'url' && c.note ==='' 
+                                                            ? <a href={c.link}>{c.name}</a>
+                                                            : c.type === 'url' && c.note !== '' 
+                                                                ? <Link to ={c.note+c.link}>{c.name}</Link>
+                                                                : <a href={c.uri+c.path}>{c.name}</a>
+                                                        }
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </nav>
+        </aside >
+    )
+};

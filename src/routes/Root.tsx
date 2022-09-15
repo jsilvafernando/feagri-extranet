@@ -1,19 +1,17 @@
 import React from "react";
 import {
-    BrowserRouter,
     Routes,
     Route,
 } from "react-router-dom";
 
 import { Protocolo } from '../components/Protocolo/Protocolo';
+import { ProtocoloConsulta } from '../components/Protocolo/ProtocoloConsulta';
   
   export function Root() {
     return (
-      <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Protocolo />} /> */}
-          <Route path="graduacao/protocolo/solicitacao" element={<Protocolo />} />
+          <Route path="extranet/graduacao/protocolo/solicitacao" element={<Protocolo />} />
+          <Route path="extranet/graduacao/protocolo/solicitacao/consulta" element={<ProtocoloConsulta />} />
         </Routes>
-      </BrowserRouter>
     );
   }
