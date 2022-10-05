@@ -8,7 +8,6 @@ export function FooterMenu(){
     }
 
 
-
     return (
         <>
         <section className={clickBottomMenu ? "bottom d-none d-sm-block open" : "bottom d-none d-sm-block closed"} onClick={toggleClick}>

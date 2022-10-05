@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 import { Protocolo } from '../components/Protocolo/Protocolo';
-import { ProtocoloConsulta } from '../components/Protocolo/ProtocoloConsulta';
+import { ProtocoloConsulta } from '../pages/Protocolo/ProtocoloConsulta';
   
   export function Root() {
     return (
