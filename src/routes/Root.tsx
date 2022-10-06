@@ -10,8 +10,9 @@ import { ProtocoloConsulta } from '../pages/Protocolo/ProtocoloConsulta';
   export function Root() {
     return (
         <Routes>
-          <Route path="extranet/graduacao/protocolo/solicitacao" element={<Protocolo />} />
-          <Route path="extranet/graduacao/protocolo/solicitacao/consulta" element={<ProtocoloConsulta />} />
+          <Route path="extranet" element="" />
+          <Route path="extranet/graduacao/protocolo/solicitacao/:titleMenu/:menuitems" element={<Protocolo />} />
+          <Route path="extranet/graduacao/protocolo/solicitacao/consulta/:titleMenu/:menuitems" element={<ProtocoloConsulta />} />
         </Routes>
     );
   }
